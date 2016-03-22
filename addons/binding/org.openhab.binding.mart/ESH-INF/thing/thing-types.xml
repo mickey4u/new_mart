@@ -23,7 +23,6 @@
 			<parameter name="ipAddress" type="text" required="true">
 				<label>Network Address</label>
 				<description>Network Address of the MART adapter</description>
-				<default>15</default>
 			</parameter>
 			<parameter name="refreshInterval" type="integer" required="false">
 				<label>Refresh Interval</label>
