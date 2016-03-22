@@ -56,7 +56,7 @@ import com.google.gson.JsonParser;
  *
  * @author Michael Kwaku Tetteh - Initial contribution
  */
-public class martHandler extends BaseThingHandler {
+public class fridgeHandler extends BaseThingHandler {
 
     private Logger logger = LoggerFactory.getLogger(martHandler.class);
 
@@ -107,7 +107,7 @@ public class martHandler extends BaseThingHandler {
 
     public static final String ADDRESS = null;
 
-    public martHandler(Thing thing) {
+    public fridgeHandler(Thing thing) {
         super(thing);
     }
 
@@ -749,30 +749,7 @@ public class martHandler extends BaseThingHandler {
                     logger.error("An exception occurred while polling the KEBA KeContact P20 for '{}': {}",
                             getThing().getUID(), e.getMessage());
                 }
-                Thread.sleep(3000);
-
-                requestUpdate = "Television Update";
-                byteBuffer = ByteBuffer.allocate(requestUpdate.getBytes().length);
-                try {
-                    byteBuffer.put(requestUpdate.getBytes("ASCII"));
-                    writer(byteBuffer, datagramChannel);
-
-                } catch (UnsupportedEncodingException | NumberFormatException e) {
-                    logger.error("An exception occurred while polling the KEBA KeContact P20 for '{}': {}",
-                            getThing().getUID(), e.getMessage());
-                }
-
-                Thread.sleep(3000);
-                requestUpdate = "Outside Light Update";
-                byteBuffer = ByteBuffer.allocate(requestUpdate.getBytes().length);
-                try {
-                    byteBuffer = ByteBuffer.allocate(requestUpdate.getBytes("ASCII").length);
-                    writer(byteBuffer, datagramChannel);
-
-                } catch (UnsupportedEncodingException | NumberFormatException e) {
-                    logger.error("An exception occurred while polling the KEBA KeContact P20 for '{}': {}",
-                            getThing().getUID(), e.getMessage());
-                }
+                Thread.sleep(4000);
 
             } catch (Exception e) {
                 // TODO: handle exception

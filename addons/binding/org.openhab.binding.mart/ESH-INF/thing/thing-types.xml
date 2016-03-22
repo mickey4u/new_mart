@@ -3,26 +3,70 @@
 	xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
 	xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
 
-	<!-- Mart Thing Type -->
-	<thing-type id="martadapter">
-		<label>Mart Smart Adapter</label>
-		<description>Mart socket with energy measurement</description>
+	<!-- Devices -->
+	<thing-type id="fridge">
+		<label>Fridge</label>
+		<description>Fridge plugged into MART adapter</description>
 		<channels>
 			<channel typeId="powerConsumedType" id="powerConsumed" />
 			<channel typeId="stateType" id="state" />
-			<channel typeId="fridgeType" id="fridgeState" />
-			<channel typeId="outsideLightType" id="outsideLightState" />
-			<channel typeId="televisionType" id="televisionState" />
 			<channel typeId="lastOnForType" id="lastOnFor" />
 			<channel typeId="onTodayType" id="onToday" />
 			<channel typeId="onTotalType" id="onTotal" />
-			<channel typeId="occupancyStatus" id="occupiedState" />
 		</channels>
 
 		<config-description>
 			<parameter name="ipAddress" type="text" required="true">
 				<label>Network Address</label>
 				<description>Network Address of the MART adapter</description>
+			</parameter>
+			<parameter name="refreshInterval" type="integer" required="false">
+				<label>Refresh Interval</label>
+				<description>Specifies the refresh interval in seconds</description>
+				<default>15</default>
+			</parameter>
+		</config-description>
+	</thing-type>
+
+	<thing-type id="television">
+		<label>Television</label>
+		<description>Television plugged into MART adapter</description>
+		<channels>
+			<channel typeId="powerConsumedType" id="powerConsumed" />
+			<channel typeId="stateType" id="state" />
+			<channel typeId="lastOnForType" id="lastOnFor" />
+			<channel typeId="onTodayType" id="onToday" />
+			<channel typeId="onTotalType" id="onTotal" />
+		</channels>
+
+		<config-description>
+			<parameter name="ipAddress" type="text" required="true">
+				<label>Network Address</label>
+				<description>Network Address of the MART adapter</description>
+			</parameter>
+			<parameter name="refreshInterval" type="integer" required="false">
+				<label>Refresh Interval</label>
+				<description>Specifies the refresh interval in seconds</description>
+				<default>15</default>
+			</parameter>
+		</config-description>
+	</thing-type>
+
+	<thing-type id="outsidelight">
+		<label>Outside Light</label>
+		<description>Outside Light Controlled with switch</description>
+		<channels>
+			<channel typeId="powerConsumedType" id="powerConsumed" />
+			<channel typeId="stateType" id="state" />
+			<channel typeId="lastOnForType" id="lastOnFor" />
+			<channel typeId="onTodayType" id="onToday" />
+			<channel typeId="onTotalType" id="onTotal" />
+		</channels>
+
+		<config-description>
+			<parameter name="ipAddress" type="text" required="true">
+				<label>Network Address</label>
+				<description>Network Address of the MART Switch</description>
 			</parameter>
 			<parameter name="refreshInterval" type="integer" required="false">
 				<label>Refresh Interval</label>
@@ -46,21 +90,6 @@
 		<description>Turns the adapter on and off</description>
 		<category>Switch</category>
 	</channel-type>
-	<channel-type id="fridgeType">
-		<item-type>Switch</item-type>
-		<label>Fridge Switch</label>
-		<description>Turns the fridge on and off</description>
-	</channel-type>
-	<channel-type id="outsideLightType">
-		<item-type>Switch</item-type>
-		<label>Outside Light Switch</label>
-		<description>Turns the outside light on or off</description>
-	</channel-type>
-	<channel-type id="televisionType">
-		<item-type>Switch</item-type>
-		<label>Television Switch</label>
-		<description>Turns the television on or off</description>
-	</channel-type>
 	<channel-type id="lastOnForType">
 		<item-type>Number</item-type>
 		<label>Last Activity Duration</label>
@@ -75,13 +104,6 @@
 		<item-type>Number</item-type>
 		<label>The total duration the device has being switched on</label>
 		<description>The total duration the device has being switched on </description>
-	</channel-type>
-	<channel-type id="occupiedState">
-		<item-type>Switch</item-type>
-		<label>Occupied State</label>
-		<description>Occupancy Status</description>
-		<category>Motion</category>
-		<state readOnly="true" />
 	</channel-type>
 
 </thing:thing-descriptions>

@@ -20,22 +20,15 @@ public class martBindingConstants {
     public static final String BINDING_ID = "mart";
 
     // List of all Thing Type UIDs
-    public final static ThingTypeUID THING_TYPE_MART_ADAPTER = new ThingTypeUID(BINDING_ID, "martadapter");
+    public final static ThingTypeUID THING_TYPE_FRIDGE = new ThingTypeUID(BINDING_ID, "fridge");
+    public final static ThingTypeUID THING_TYPE_TELEVISION = new ThingTypeUID(BINDING_ID, "television");
+    public final static ThingTypeUID THING_TYPE_OUTSIDELIGHT = new ThingTypeUID(BINDING_ID, "outsidelight");
 
     // List of all Channel ids
     public final static String CHANNEL_STATE = "state";
-    public final static String CHANNEL_FRIDGE = "fridgeState";
-    public final static String CHANNEL_OUTSIDE_LIGHT = "outsideLightState";
-    public final static String CHANNEL_TELEVISION = "televisionState";
     public final static String CHANNEL_POWER_CONSUMED = "powerConsumed";
     public final static String CHANNEL_LAST_ON_TODAY = "lastOnFor";
     public final static String CHANNEL_ON_TODAY = "onToday";
     public final static String CHANNEL_ON_TOTAL = "onTotal";
-    public final static String CHANNEL_OCCUPANCY_STATUS = "occupiedState";
-
-    // Bridge Config Properties
-    public static final String HOST = "ipAddress";
-    public static final String USERNAME = "username";
-    public static final String PASSWORD = "password";
 
 }
