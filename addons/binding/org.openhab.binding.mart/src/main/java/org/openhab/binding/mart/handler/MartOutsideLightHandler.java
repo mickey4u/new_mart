@@ -119,10 +119,10 @@ public class MartOutsideLightHandler extends BaseThingHandler {
                 if (command instanceof OnOffType) {
                     if (command == OnOffType.ON) {
                         // send on command
-                        sendMartCommand("On Adapter");
+                        sendMartCommand("On Outdoor Light");
                     } else if (command == OnOffType.OFF) {
                         // send off command
-                        sendMartCommand("Off Adapter");
+                        sendMartCommand("Off Outdoor Light");
                     } else {
                         return;
                     }

@@ -119,10 +119,10 @@ public class MartFridgeHandler extends BaseThingHandler {
                 if (command instanceof OnOffType) {
                     if (command == OnOffType.ON) {
                         // send on command
-                        sendMartCommand("On Adapter");
+                        sendMartCommand("On Fridge");
                     } else if (command == OnOffType.OFF) {
                         // send off command
-                        sendMartCommand("Off Adapter");
+                        sendMartCommand("Off Fridge");
                     } else {
                         return;
                     }
