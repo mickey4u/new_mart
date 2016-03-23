@@ -56,7 +56,7 @@ import com.google.gson.JsonParser;
  *
  * @author Michael Kwaku Tetteh - Initial contribution
  */
-public class televisionHandler extends BaseThingHandler {
+public class MartOutsideLightHandler extends BaseThingHandler {
 
     private Logger logger = LoggerFactory.getLogger(martHandler.class);
 
@@ -107,7 +107,7 @@ public class televisionHandler extends BaseThingHandler {
 
     public static final String ADDRESS = null;
 
-    public televisionHandler(Thing thing) {
+    public MartOutsideLightHandler(Thing thing) {
         super(thing);
     }
 
@@ -738,7 +738,7 @@ public class televisionHandler extends BaseThingHandler {
         public void run() {
             try {
 
-                String requestUpdate = "Television Update";
+                String requestUpdate = "Outside Light Update";
                 // create a byte buffer and allocate a capacity
                 ByteBuffer byteBuffer = ByteBuffer.allocate(requestUpdate.getBytes().length);
                 try {
@@ -749,7 +749,7 @@ public class televisionHandler extends BaseThingHandler {
                     logger.error("An exception occurred while polling the KEBA KeContact P20 for '{}': {}",
                             getThing().getUID(), e.getMessage());
                 }
-                Thread.sleep(5000);
+                Thread.sleep(3000);
 
             } catch (Exception e) {
                 // TODO: handle exception

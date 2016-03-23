@@ -15,9 +15,9 @@ import org.eclipse.smarthome.core.thing.Thing;
 import org.eclipse.smarthome.core.thing.ThingTypeUID;
 import org.eclipse.smarthome.core.thing.binding.BaseThingHandlerFactory;
 import org.eclipse.smarthome.core.thing.binding.ThingHandler;
-import org.openhab.binding.mart.handler.fridgeHandler;
-import org.openhab.binding.mart.handler.outsidelightHandler;
-import org.openhab.binding.mart.handler.televisionHandler;
+import org.openhab.binding.mart.handler.MartFridgeHandler;
+import org.openhab.binding.mart.handler.MartOutsideLightHandler;
+import org.openhab.binding.mart.handler.MartTelevisionHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,11 +48,11 @@ public class martHandlerFactory extends BaseThingHandlerFactory {
         ThingTypeUID thingTypeUID = thing.getThingTypeUID();
 
         if (thingTypeUID.equals(THING_TYPE_FRIDGE)) {
-            return new fridgeHandler(thing);
+            return new MartFridgeHandler(thing);
         } else if (thingTypeUID.equals(THING_TYPE_OUTSIDELIGHT)) {
-            return new outsidelightHandler(thing);
+            return new MartOutsideLightHandler(thing);
         } else if (thingTypeUID.equals(THING_TYPE_TELEVISION)) {
-            return new televisionHandler(thing);
+            return new MartTelevisionHandler(thing);
         } else {
             logger.warn("ThingHandler not found for {}", thing.getThingTypeUID());
         }
