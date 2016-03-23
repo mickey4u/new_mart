@@ -58,7 +58,7 @@ import com.google.gson.JsonParser;
  */
 public class MartTelevisionHandler extends BaseThingHandler {
 
-    private Logger logger = LoggerFactory.getLogger(martHandler.class);
+    private Logger logger = LoggerFactory.getLogger(MartTelevisionHandler.class);
 
     /* public final static Set<ThingTypeUID> SUPPORTTED_THING_TYPES = Sets.newHashSet(THING_TYPE_MART_ADAPTER); */
 
