@@ -418,6 +418,20 @@ public class MartTelevisionHandler extends BaseThingHandler {
 
             for (Entry<String, JsonElement> data : readData.entrySet()) {
                 switch (data.getKey()) {
+                    case "state":
+                        int state = data.getValue().getAsInt();
+                        switch (state) {
+                            case 0:
+                                updateState(new ChannelUID(getThing().getUID(), CHANNEL_STATE), OnOffType.OFF);
+                                break;
+                            case 1:
+                                updateState(new ChannelUID(getThing().getUID(), CHANNEL_STATE), OnOffType.OFF);
+                                break;
+
+                            default:
+                                break;
+                        }
+                        break;
                     case "onToday":
                         State onToday = new DecimalType(data.getValue().getAsInt());
                         if (onToday != null) {

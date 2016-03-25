@@ -80,7 +80,7 @@
 	<!-- Mart Channel Types -->
 	<channel-type id="powerConsumedType">
 		<item-type>Number</item-type>
-		<label>Power Consumed</label>
+		<label>Current Power Consumed</label>
 		<category>Energy</category>
 		<state pattern="%.2f W"></state>
 	</channel-type>

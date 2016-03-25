@@ -35,7 +35,6 @@ public class martHandlerFactory extends BaseThingHandlerFactory {
 
     private final static Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = ImmutableSet.of(THING_TYPE_FRIDGE,
             THING_TYPE_OUTSIDELIGHT, THING_TYPE_TELEVISION);
-    /* THING_TYPE_OUTSIDELIGHT, THING_TYPE_TELEVISION); */
 
     @Override
     public boolean supportsThingType(ThingTypeUID thingTypeUID) {
