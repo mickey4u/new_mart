@@ -3,16 +3,28 @@
 	xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
 	xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
 
-	<!-- Devices -->
-	<thing-type id="fridge">
-		<label>Fridge</label>
-		<description>Fridge plugged into MART adapter</description>
+	<thing-type id="martadapter">
+		<label>Adapter</label>
+		<description> MART adapter</description>
 		<channels>
-			<channel typeId="powerConsumedType" id="powerConsumed" />
-			<channel typeId="stateType" id="state" />
-			<channel typeId="lastOnForType" id="lastOnFor" />
-			<channel typeId="onTodayType" id="onToday" />
-			<channel typeId="onTotalType" id="onTotal" />
+			<!-- -->
+			<channel typeId="televisionPowerConsumedType" id="televisionPowerConsumed" />
+			<channel typeId="televisionStateType" id="televisionState" />
+			<channel typeId="televisionLastOnForType" id="televisionLastOnFor" />
+			<channel typeId="televisionOnTodayType" id="televisionOnToday" />
+			<channel typeId="televisionOnTotalType" id="televisionOnTotal" />
+			<!-- -->
+			<channel typeId="fridgePowerConsumedType" id="fridgePowerConsumed" />
+			<channel typeId="fridgeStateType" id="fridgeState" />
+			<channel typeId="fridgeLastOnForType" id="fridgeLastOnFor" />
+			<channel typeId="fridgeOnTodayType" id="fridgeOnToday" />
+			<channel typeId="fridgeOnTotalType" id="fridgeOnTotal" />
+			<!-- -->
+			<channel typeId="lightPowerConsumedType" id="lightPowerConsumed" />
+			<channel typeId="lightStateType" id="lightState" />
+			<channel typeId="lightLastOnForType" id="lightLastOnFor" />
+			<channel typeId="lightOnTodayType" id="lightOnToday" />
+			<channel typeId="lightOnTotalType" id="lightOnTotal" />
 		</channels>
 
 		<config-description>
@@ -28,79 +40,89 @@
 		</config-description>
 	</thing-type>
 
-	<thing-type id="television">
-		<label>Television</label>
-		<description>Television plugged into MART adapter</description>
-		<channels>
-			<channel typeId="powerConsumedType" id="powerConsumed" />
-			<channel typeId="stateType" id="state" />
-			<channel typeId="lastOnForType" id="lastOnFor" />
-			<channel typeId="onTodayType" id="onToday" />
-			<channel typeId="onTotalType" id="onTotal" />
-		</channels>
-
-		<config-description>
-			<parameter name="ipAddress" type="text" required="true">
-				<label>Network Address</label>
-				<description>Network Address of the MART adapter</description>
-			</parameter>
-			<parameter name="refreshInterval" type="integer" required="false">
-				<label>Refresh Interval</label>
-				<description>Specifies the refresh interval in seconds</description>
-				<default>15</default>
-			</parameter>
-		</config-description>
-	</thing-type>
-
-	<thing-type id="outsidelight">
-		<label>Outside Light</label>
-		<description>Outside Light Controlled with switch</description>
-		<channels>
-			<channel typeId="powerConsumedType" id="powerConsumed" />
-			<channel typeId="stateType" id="state" />
-			<channel typeId="lastOnForType" id="lastOnFor" />
-			<channel typeId="onTodayType" id="onToday" />
-			<channel typeId="onTotalType" id="onTotal" />
-		</channels>
-
-		<config-description>
-			<parameter name="ipAddress" type="text" required="true">
-				<label>Network Address</label>
-				<description>Network Address of the MART Switch</description>
-			</parameter>
-			<parameter name="refreshInterval" type="integer" required="false">
-				<label>Refresh Interval</label>
-				<description>Specifies the refresh interval in seconds</description>
-				<default>15</default>
-			</parameter>
-		</config-description>
-
-	</thing-type>
 
 	<!-- Mart Channel Types -->
-	<channel-type id="powerConsumedType">
+	<channel-type id="televisionPowerConsumedType">
 		<item-type>Number</item-type>
 		<label>Current Power Consumed</label>
 		<category>Energy</category>
 		<state pattern="%.2f W"></state>
 	</channel-type>
-	<channel-type id="stateType">
+	<channel-type id="fridgePowerConsumedType">
+		<item-type>Number</item-type>
+		<label>Current Power Consumed</label>
+		<category>Energy</category>
+		<state pattern="%.2f W"></state>
+	</channel-type>
+	<channel-type id="lightPowerConsumedType">
+		<item-type>Number</item-type>
+		<label>Current Power Consumed</label>
+		<category>Energy</category>
+		<state pattern="%.2f W"></state>
+	</channel-type>
+
+	<channel-type id="televisionStateType">
 		<item-type>Switch</item-type>
 		<label>Switch</label>
 		<description>Turns the adapter on and off</description>
 		<category>Switch</category>
 	</channel-type>
-	<channel-type id="lastOnForType">
+	<channel-type id="fridgeStateType">
+		<item-type>Switch</item-type>
+		<label>Switch</label>
+		<description>Turns the adapter on and off</description>
+		<category>Switch</category>
+	</channel-type>
+	<channel-type id="lightStateType">
+		<item-type>Switch</item-type>
+		<label>Switch</label>
+		<description>Turns the adapter on and off</description>
+		<category>Switch</category>
+	</channel-type>
+
+	<channel-type id="televisionLastOnForType">
 		<item-type>Number</item-type>
 		<label>Last Activity Duration</label>
 		<description>The duration the device has being switched on for</description>
 	</channel-type>
-	<channel-type id="onTodayType">
+	<channel-type id="fridgeLastOnForType">
+		<item-type>Number</item-type>
+		<label>Last Activity Duration</label>
+		<description>The duration the device has being switched on for</description>
+	</channel-type>
+	<channel-type id="lightLastOnForType">
+		<item-type>Number</item-type>
+		<label>Last Activity Duration</label>
+		<description>The duration the device has being switched on for</description>
+	</channel-type>
+
+	<channel-type id="televisionOnTodayType">
 		<item-type>Number</item-type>
 		<label>The total duration the device had being switched on for today</label>
 		<description>Today's total activity duration</description>
 	</channel-type>
-	<channel-type id="onTotalType">
+	<channel-type id="fridgeOnTodayType">
+		<item-type>Number</item-type>
+		<label>The total duration the device had being switched on for today</label>
+		<description>Today's total activity duration</description>
+	</channel-type>
+	<channel-type id="lightOnTodayType">
+		<item-type>Number</item-type>
+		<label>The total duration the device had being switched on for today</label>
+		<description>Today's total activity duration</description>
+	</channel-type>
+
+	<channel-type id="televisionOnTotalType">
+		<item-type>Number</item-type>
+		<label>The total duration the device has being switched on</label>
+		<description>The total duration the device has being switched on </description>
+	</channel-type>
+	<channel-type id="fridgeOnTotalType">
+		<item-type>Number</item-type>
+		<label>The total duration the device has being switched on</label>
+		<description>The total duration the device has being switched on </description>
+	</channel-type>
+	<channel-type id="lightOnTotalType">
 		<item-type>Number</item-type>
 		<label>The total duration the device has being switched on</label>
 		<description>The total duration the device has being switched on </description>

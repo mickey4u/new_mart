@@ -56,9 +56,9 @@ import com.google.gson.JsonParser;
  *
  * @author Michael Kwaku Tetteh - Initial contribution
  */
-public class MartTelevisionHandler extends BaseThingHandler {
+public class MartHandler extends BaseThingHandler {
 
-    private Logger logger = LoggerFactory.getLogger(MartTelevisionHandler.class);
+    private Logger logger = LoggerFactory.getLogger(MartHandler.class);
 
     /* public final static Set<ThingTypeUID> SUPPORTTED_THING_TYPES = Sets.newHashSet(THING_TYPE_MART_ADAPTER); */
 
@@ -104,17 +104,18 @@ public class MartTelevisionHandler extends BaseThingHandler {
     public static final int REMOTE_PORT_NUMBER = 7091;
     public static final int PING_TIME_OUT = 3000;
     public static final int BUFFER_SIZE = 1024;
+    public static final int UPDATE_INTERNAL = 3000;
 
     public static final String ADDRESS = null;
 
-    public MartTelevisionHandler(Thing thing) {
+    public MartHandler(Thing thing) {
         super(thing);
     }
 
     @Override
     public void handleCommand(ChannelUID channelUID, Command command) {
         switch (channelUID.getId()) {
-            case CHANNEL_STATE:
+            case CHANNEL_TELEVISION_STATE:
                 // check if the command is an ON/OFF command
                 if (command instanceof OnOffType) {
                     if (command == OnOffType.ON) {
@@ -123,6 +124,34 @@ public class MartTelevisionHandler extends BaseThingHandler {
                     } else if (command == OnOffType.OFF) {
                         // send off command
                         sendMartCommand("Off Television");
+                    } else {
+                        return;
+                    }
+                }
+                break;
+            case CHANNEL_FRIDGE_STATE:
+                // check if the command is an ON/OFF command
+                if (command instanceof OnOffType) {
+                    if (command == OnOffType.ON) {
+                        // send on command
+                        sendMartCommand("On Fridge");
+                    } else if (command == OnOffType.OFF) {
+                        // send off command
+                        sendMartCommand("Off Fridge");
+                    } else {
+                        return;
+                    }
+                }
+                break;
+            case CHANNEL_LIGHT_STATE:
+                // check if the command is an ON/OFF command
+                if (command instanceof OnOffType) {
+                    if (command == OnOffType.ON) {
+                        // send on command
+                        sendMartCommand("On Outdoor Light");
+                    } else if (command == OnOffType.OFF) {
+                        // send off command
+                        sendMartCommand("Off Outdoor Light");
                     } else {
                         return;
                     }
@@ -418,33 +447,123 @@ public class MartTelevisionHandler extends BaseThingHandler {
 
             for (Entry<String, JsonElement> data : readData.entrySet()) {
                 switch (data.getKey()) {
-                    case "state":
-                        int state = data.getValue().getAsInt();
-                        switch (state) {
+                    // television switch
+                    case "televisionState":
+                        int t_state = data.getValue().getAsInt();
+                        switch (t_state) {
                             case 0:
-                                updateState(new ChannelUID(getThing().getUID(), CHANNEL_STATE), OnOffType.OFF);
+                                updateState(new ChannelUID(getThing().getUID(), CHANNEL_TELEVISION_STATE),
+                                        OnOffType.OFF);
                                 break;
                             case 1:
-                                updateState(new ChannelUID(getThing().getUID(), CHANNEL_STATE), OnOffType.OFF);
+                                updateState(new ChannelUID(getThing().getUID(), CHANNEL_TELEVISION_STATE),
+                                        OnOffType.ON);
                                 break;
 
                             default:
                                 break;
                         }
+
                         break;
-                    case "onToday":
-                        State onToday = new DecimalType(data.getValue().getAsInt());
-                        if (onToday != null) {
-                            logger.debug("", onToday, getThing().getUID());
-                            updateState(new ChannelUID(getThing().getUID(), CHANNEL_ON_TODAY), onToday);
+                    // fridge switch
+                    case "fridgeState":
+                        int f_state = data.getValue().getAsInt();
+                        switch (f_state) {
+                            case 0:
+                                updateState(new ChannelUID(getThing().getUID(), CHANNEL_FRIDGE_STATE), OnOffType.OFF);
+                                break;
+                            case 1:
+                                updateState(new ChannelUID(getThing().getUID(), CHANNEL_FRIDGE_STATE), OnOffType.ON);
+                                break;
+
+                            default:
+                                break;
+                        }
+
+                        break;
+                    // light switch
+                    case "lightState":
+                        int l_state = data.getValue().getAsInt();
+                        switch (l_state) {
+                            case 0:
+                                updateState(new ChannelUID(getThing().getUID(), CHANNEL_LIGHT_STATE), OnOffType.OFF);
+                                break;
+                            case 1:
+                                updateState(new ChannelUID(getThing().getUID(), CHANNEL_LIGHT_STATE), OnOffType.ON);
+                                break;
+
+                            default:
+                                break;
+                        }
+
+                        break;
+
+                    case "televisionOnToday":
+                        State t_OnToday = new DecimalType(data.getValue().getAsInt());
+                        if (t_OnToday != null) {
+                            logger.debug("", t_OnToday, getThing().getUID());
+                            updateState(new ChannelUID(getThing().getUID(), CHANNEL_TELEVISION_ON_TODAY), t_OnToday);
+                        }
+                        break;
+                    case "frdigeOnToday":
+                        State f_OnToday = new DecimalType(data.getValue().getAsInt());
+                        if (f_OnToday != null) {
+                            logger.debug("", f_OnToday, getThing().getUID());
+                            updateState(new ChannelUID(getThing().getUID(), CHANNEL_FRIDGE_ON_TODAY), f_OnToday);
+                        }
+                        break;
+                    case "lightOnToday":
+                        State l_OnToday = new DecimalType(data.getValue().getAsInt());
+                        if (l_OnToday != null) {
+                            logger.debug("", l_OnToday, getThing().getUID());
+                            updateState(new ChannelUID(getThing().getUID(), CHANNEL_LIGHT_ON_TODAY), l_OnToday);
                         }
                         break;
 
-                    case "onTotal":
-                        State onTotal = new DecimalType(data.getValue().getAsInt());
-                        if (onTotal != null) {
-                            logger.debug("", onTotal, getThing().getUID());
-                            updateState(new ChannelUID(getThing().getUID(), CHANNEL_ON_TOTAL), onTotal);
+                    case "televisionOnTotal":
+                        State t_OnTotal = new DecimalType(data.getValue().getAsInt());
+                        if (t_OnTotal != null) {
+                            logger.debug("", t_OnTotal, getThing().getUID());
+                            updateState(new ChannelUID(getThing().getUID(), CHANNEL_TELEVISION_ON_TOTAL), t_OnTotal);
+                        }
+                        break;
+                    case "fridgeOnTotal":
+                        State f_OnTotal = new DecimalType(data.getValue().getAsInt());
+                        if (f_OnTotal != null) {
+                            logger.debug("", f_OnTotal, getThing().getUID());
+                            updateState(new ChannelUID(getThing().getUID(), CHANNEL_FRIDGE_ON_TOTAL), f_OnTotal);
+                        }
+                        break;
+                    case "lightOnTotal":
+                        State l_OnTotal = new DecimalType(data.getValue().getAsInt());
+                        if (l_OnTotal != null) {
+                            logger.debug("", l_OnTotal, getThing().getUID());
+                            updateState(new ChannelUID(getThing().getUID(), CHANNEL_LIGHT_ON_TOTAL), l_OnTotal);
+                        }
+                        break;
+
+                    case "televisionPowerConsumed":
+                        State t_PowerConsumed = new DecimalType(data.getValue().getAsInt());
+                        if (t_PowerConsumed != null) {
+                            logger.debug("", t_PowerConsumed, getThing().getUID());
+                            updateState(new ChannelUID(getThing().getUID(), CHANNEL_TELEVISION_POWER_CONSUMED),
+                                    t_PowerConsumed);
+                        }
+                        break;
+                    case "fridgePowerConsumed":
+                        State f_PowerConsumed = new DecimalType(data.getValue().getAsInt());
+                        if (f_PowerConsumed != null) {
+                            logger.debug("", f_PowerConsumed, getThing().getUID());
+                            updateState(new ChannelUID(getThing().getUID(), CHANNEL_FRIDGE_POWER_CONSUMED),
+                                    f_PowerConsumed);
+                        }
+                        break;
+                    case "lightPowerConsumed":
+                        State l_PowerConsumed = new DecimalType(data.getValue().getAsInt());
+                        if (l_PowerConsumed != null) {
+                            logger.debug("", l_PowerConsumed, getThing().getUID());
+                            updateState(new ChannelUID(getThing().getUID(), CHANNEL_LIGHT_POWER_CONSUMED),
+                                    l_PowerConsumed);
                         }
                         break;
 
@@ -752,7 +871,7 @@ public class MartTelevisionHandler extends BaseThingHandler {
         public void run() {
             try {
 
-                String requestUpdate = "Television Update";
+                String requestUpdate = "Outside Light Update";
                 // create a byte buffer and allocate a capacity
                 ByteBuffer byteBuffer = ByteBuffer.allocate(requestUpdate.getBytes().length);
                 try {
@@ -760,10 +879,10 @@ public class MartTelevisionHandler extends BaseThingHandler {
                     writer(byteBuffer, datagramChannel);
 
                 } catch (UnsupportedEncodingException | NumberFormatException e) {
-                    logger.error("An exception occurred while polling the KEBA KeContact P20 for '{}': {}",
+                    logger.error("An exception occurred while polling the MART Smart adapter for '{}': {}",
                             getThing().getUID(), e.getMessage());
                 }
-                Thread.sleep(5000);
+                Thread.sleep(3000);
 
             } catch (Exception e) {
                 // TODO: handle exception
