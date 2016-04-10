@@ -25,6 +25,7 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.util.Iterator;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
@@ -39,12 +40,14 @@ import org.eclipse.smarthome.core.thing.ChannelUID;
 import org.eclipse.smarthome.core.thing.Thing;
 import org.eclipse.smarthome.core.thing.ThingStatus;
 import org.eclipse.smarthome.core.thing.ThingStatusDetail;
+import org.eclipse.smarthome.core.thing.ThingTypeUID;
 import org.eclipse.smarthome.core.thing.binding.BaseThingHandler;
 import org.eclipse.smarthome.core.types.Command;
 import org.eclipse.smarthome.core.types.State;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.Sets;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
@@ -107,6 +110,8 @@ public class MartHandler extends BaseThingHandler {
     public static final int UPDATE_INTERNAL = 3000;
 
     public static final String ADDRESS = null;
+
+    public static final Set<ThingTypeUID> SUPPORTTED_THING_TYPES = Sets.newHashSet(THING_TYPE_MART_ADAPTER);
 
     public MartHandler(Thing thing) {
         super(thing);
@@ -882,6 +887,32 @@ public class MartHandler extends BaseThingHandler {
                     logger.error("An exception occurred while polling the MART Smart adapter for '{}': {}",
                             getThing().getUID(), e.getMessage());
                 }
+                Thread.sleep(3000);
+
+                requestUpdate = "Television Update";
+
+                byteBuffer = ByteBuffer.allocate(requestUpdate.getBytes().length);
+                try {
+                    byteBuffer.put(requestUpdate.getBytes("ASCII"));
+                    writer(byteBuffer, datagramChannel);
+                } catch (UnsupportedEncodingException | NumberFormatException e) {
+                    logger.error("An exception occurred while polling the MART Smart adapter for '{}': {}",
+                            getThing().getUID(), e.getMessage());
+                }
+
+                Thread.sleep(3000);
+
+                requestUpdate = "Fridge Update";
+
+                byteBuffer = ByteBuffer.allocate(requestUpdate.getBytes().length);
+                try {
+                    byteBuffer.put(requestUpdate.getBytes("ASCII"));
+                    writer(byteBuffer, datagramChannel);
+                } catch (UnsupportedEncodingException | NumberFormatException e) {
+                    logger.error("An exception occurred while polling the MART Smart adapter for '{}': {}",
+                            getThing().getUID(), e.getMessage());
+                }
+
                 Thread.sleep(3000);
 
             } catch (Exception e) {

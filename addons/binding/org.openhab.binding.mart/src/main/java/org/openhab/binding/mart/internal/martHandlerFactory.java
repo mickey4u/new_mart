@@ -5,6 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
+
 package org.openhab.binding.mart.internal;
 
 import static org.openhab.binding.mart.martBindingConstants.THING_TYPE_MART_ADAPTER;
@@ -27,10 +28,10 @@ import com.google.common.collect.Sets;
  *
  * @author Michael Kwaku Tetteh - Initial contribution
  */
+
 public class martHandlerFactory extends BaseThingHandlerFactory {
 
     private Logger logger = LoggerFactory.getLogger(martHandlerFactory.class);
-
     private final static Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = Sets.newHashSet(THING_TYPE_MART_ADAPTER);
 
     @Override
