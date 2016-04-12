@@ -52,6 +52,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
 /**
  * The {@link martHandler} is responsible for handling commands, which are
@@ -62,6 +66,7 @@ import com.google.gson.JsonParser;
 public class MartHandler extends BaseThingHandler {
 
     private Logger logger = LoggerFactory.getLogger(MartHandler.class);
+    private final OkHttpClient client = new OkHttpClient();
 
     /* public final static Set<ThingTypeUID> SUPPORTTED_THING_TYPES = Sets.newHashSet(THING_TYPE_MART_ADAPTER); */
 
@@ -125,10 +130,10 @@ public class MartHandler extends BaseThingHandler {
                 if (command instanceof OnOffType) {
                     if (command == OnOffType.ON) {
                         // send on command
-                        sendMartCommand("On Television");
+                        sendMartCommand("U");
                     } else if (command == OnOffType.OFF) {
                         // send off command
-                        sendMartCommand("Off Television");
+                        sendMartCommand("D");
                     } else {
                         return;
                     }
@@ -882,6 +887,7 @@ public class MartHandler extends BaseThingHandler {
                 try {
                     byteBuffer.put(requestUpdate.getBytes("ASCII"));
                     writer(byteBuffer, datagramChannel);
+                    oktrial();
 
                 } catch (UnsupportedEncodingException | NumberFormatException e) {
                     logger.error("An exception occurred while polling the MART Smart adapter for '{}': {}",
@@ -935,4 +941,29 @@ public class MartHandler extends BaseThingHandler {
         // send post request
 
     }
+
+    public void oktrial() {
+        Request request = new Request.Builder().url("http://publicobject.com/helloworld.txt").build();
+
+        client.newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onResponse(Response arg0) throws IOException {
+                // TODO Auto-generated method stub
+                if (arg0.isSuccessful()) {
+                    String resp = arg0.body().string();
+                    ByteBuffer byteBuffer = ByteBuffer.allocate(resp.getBytes().length);
+                    writer(byteBuffer, datagramChannel);
+                    logger.debug(resp);
+                }
+            }
+
+            @Override
+            public void onFailure(Request arg0, IOException arg1) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+    }
+
 }
