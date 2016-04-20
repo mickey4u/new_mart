@@ -53,6 +53,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -115,6 +116,8 @@ public class MartHandler extends BaseThingHandler {
     public static final int UPDATE_INTERNAL = 3000;
 
     public static final String ADDRESS = null;
+
+    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     public static final Set<ThingTypeUID> SUPPORTTED_THING_TYPES = Sets.newHashSet(THING_TYPE_MART_ADAPTER);
 
@@ -507,7 +510,7 @@ public class MartHandler extends BaseThingHandler {
                         }
 
                         break;
-
+                    // how long the devices were on during the day
                     case "televisionOnToday":
                         State t_OnToday = new DecimalType(data.getValue().getAsInt());
                         if (t_OnToday != null) {
@@ -529,7 +532,7 @@ public class MartHandler extends BaseThingHandler {
                             updateState(new ChannelUID(getThing().getUID(), CHANNEL_LIGHT_ON_TODAY), l_OnToday);
                         }
                         break;
-
+                    // the amount of power the device has consumed so far
                     case "televisionOnTotal":
                         State t_OnTotal = new DecimalType(data.getValue().getAsInt());
                         if (t_OnTotal != null) {
@@ -551,7 +554,7 @@ public class MartHandler extends BaseThingHandler {
                             updateState(new ChannelUID(getThing().getUID(), CHANNEL_LIGHT_ON_TOTAL), l_OnTotal);
                         }
                         break;
-
+                    // the power consumed by each appliance during the day
                     case "televisionPowerConsumed":
                         State t_PowerConsumed = new DecimalType(data.getValue().getAsInt());
                         if (t_PowerConsumed != null) {
@@ -834,6 +837,7 @@ public class MartHandler extends BaseThingHandler {
                             } catch (IOException e) {
                                 updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.COMMUNICATION_ERROR,
                                         "An error occurred while closing the channel");
+
                             }
 
                             // if the channel was closed update the thing status
@@ -888,6 +892,7 @@ public class MartHandler extends BaseThingHandler {
                     byteBuffer.put(requestUpdate.getBytes("ASCII"));
                     writer(byteBuffer, datagramChannel);
                     oktrial();
+                    // okpost();
 
                 } catch (UnsupportedEncodingException | NumberFormatException e) {
                     logger.error("An exception occurred while polling the MART Smart adapter for '{}': {}",
@@ -965,5 +970,32 @@ public class MartHandler extends BaseThingHandler {
             }
         });
     }
+
+    /*
+     * public void okpost() {
+     *
+     * String json = "{   "deviceName": "laptop"\,
+     * +"devicePowerRating": 20,
+     * "deviceDailyDurationOfUse": 24}";
+     *
+     * Device device = new Device();
+     * device.setDeviceName("machine");
+     * device.setDevicePowerRating(23);
+     * device.setDeviceDailyDurationOfUse(45);
+     *
+     * Gson gson = new Gson();
+     * String json = gson.toJson(device);
+     * RequestBody body = RequestBody.create(JSON, json);
+     * Request request = new Request.Builder().url("http://127.0.0.1/martservice/public/api/v1/devices").post(body)
+     * .build();
+     * try {
+     * Response response = client.newCall(request).execute();
+     * } catch (IOException e) {
+     * // TODO Auto-generated catch block
+     * e.printStackTrace();
+     * }
+     *
+     * }
+     */
 
 }
